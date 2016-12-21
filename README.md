@@ -1,6 +1,8 @@
 # bowtie-vagrant
 
-First cd to the .box location and add it
-```
-vagrant box add bowtie bowtie.box
-```
+This box will pull the bowtie-wordpress repo into the www folder and import the database during provision. Make sure the SSH key for your host system is saved in GitHub.
+
+## Credentials
+
+MySQL Username: root
+MySQL Password: vagrant
