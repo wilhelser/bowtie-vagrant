@@ -1,0 +1,56 @@
+.flex-center, .vertical-center .row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+@mixin flex-center() {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.push-down-single { margin-bottom: 1em;}
+.push-down-double { margin-bottom: 2em;}
+.push-down-triple { margin-bottom: 3em;}
+
+.push-up-single { margin-top: 1em;}
+.push-up-double { margin-top: 2em;}
+.push-up-triple { margin-top: 3em;}
+
+////////////////////////////////////////////////////////////////////////////////
+// Media query mixin
+// $breakpoints sass-map is defined in _settings.scss
+////////////////////////////////////////////////////////////////////////////////
+
+@mixin smaller-than($point-name) {
+  $width: map-get($breakpoints, $point-name);
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin larger-than($point-name) {
+  $width: map-get($breakpoints, $point-name);
+  @media (min-width: $width) {
+    @content;
+  }
+}

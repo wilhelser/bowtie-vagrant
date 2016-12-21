@@ -1,0 +1,48 @@
+@keyframes bounceInDown {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes slideDown {
+	0% {
+		top: -100%;
+	}
+
+	100% {
+		top: 0;
+	}
+}
+
+@mixin slideDown {
+  animation-name: slideDown;
+	animation-duration: 0.5s;
+}
+
+@mixin bounceInDown {
+  animation-name: bounceInDown;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}

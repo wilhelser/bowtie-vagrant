@@ -1,0 +1,36 @@
+input[type="submit"],
+input[type="button"] {
+  @include button;
+}
+
+.button {
+  padding: 0.5em 1em;
+  background: color('red');
+  color: #fff;
+
+  &.hollow {
+    background: transparent;
+    border: 3px solid color('red');
+    color: color('red');
+
+    &.black {
+      border-color: color('black');
+      color: color('black');
+
+      &:hover {
+        background: color('black');
+        color: #fff;
+      }
+    }
+
+    &.white {
+      border-color: #fff;
+      color: #fff;
+
+      &:hover {
+        background: #fff;
+        color: color('black');
+      }
+    }
+  }
+}

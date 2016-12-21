@@ -1,0 +1,16 @@
+@import "base/colors";
+
+.color-select {
+  padding: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  color: #fff;
+
+  &.is-light {
+    color: color('black');
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
