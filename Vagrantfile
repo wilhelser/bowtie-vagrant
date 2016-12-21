@@ -13,9 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'theinfiniteagency/bowtie'
 
   # The hostname for the VM
-  config.vm.hostname = 'bowtie-wordpress'
-
-  config.ssh.insert_key = false
+  config.vm.hostname = 'bowtie-vagrant'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -29,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network 'private_network', ip: '192.168.56.26'
+  config.vm.network 'private_network', ip: '192.168.56.28'
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -74,16 +72,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
+  # add github to the list of known_hosts
+  config.vm.provision :shell do |shell|
+    shell.inline = "ssh-keyscan -H $3 >> $2 && chmod 600 $2"
+    shell.args = %q{/root/.ssh /root/.ssh/known_hosts "github.com"}
+  end
+
   $clone = <<-SHELL
     echo 'Starting Wordpress Setup'
-    mkdir -p ~/.ssh
-    chmod 700 ~/.ssh
-    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
     ssh -T git@github.com
     git clone git@github.com:theinfiniteagency/bowtie-wordpress /www-temp
     mv /www-temp/* /www/
     rm -Rf /www-temp
-    sed -i "s/bowtie-wordpress/$1/g" /www/bowtie-wordpress.sql
+    echo "Updating Wordpress Site URL to $1.dev"
+    sed -i "s/infinitedev/$1/g" /www/bowtie-wordpress.sql
     echo 'Importing Bowtie Database'
     mysql -uroot -pvagrant -e "drop database wordpress"
     mysql -uroot -pvagrant -e "create database wordpress"
