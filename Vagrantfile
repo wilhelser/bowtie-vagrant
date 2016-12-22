@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'theinfiniteagency/bowtie'
 
   # The hostname for the VM
-  config.vm.hostname = 'bowtie-vagrant'
+  config.vm.hostname = 'bowtie-wordpress'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -78,10 +78,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   $clone = <<-SHELL
     sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
     echo 'Importing Bowtie Database'
-    mysql --login-path=local -e "create database wordpress"
+    mysql --login-path=local -e "DROP DATABASE IF EXISTS wordpress"
+    mysql --login-path=local -e "CREATE DATABASE wordpress"
     mysql --login-path=local wordpress < /www/bowtie-wordpress.sql
     rm /www/bowtie-wordpress.sql
-    echo "Now serving Wordpress on $1.dev"
+    echo "🎉  Now serving Wordpress on $1.dev"
   SHELL
 
   config.vm.provision "shell", args: "#{config.vm.hostname}", inline: $clone
