@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = 'theinfiniteagency/bowtie'
+  config.vm.box = 'bento/ubuntu-16.04'
 
   # The hostname for the VM
   config.vm.hostname = 'bowtie-vagrant'
@@ -36,7 +36,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
-  config.ssh.forward_agent = true
+  config.ssh.forward_agent = false
+  config.ssh.insert_key = false
 
   # Create an entry in the /etc/hosts file for #{hostname}.dev
   if defined? VagrantPlugins::HostsUpdater
@@ -72,25 +73,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  # add github to the list of known_hosts
-  config.vm.provision :shell do |shell|
-    shell.inline = "ssh-keyscan -H $3 >> $2 && chmod 600 $2"
-    shell.args = %q{/root/.ssh /root/.ssh/known_hosts "github.com"}
-  end
+  # Fixes "stdin: is not a tty" and "mesg: ttyname failed : Inappropriate ioctl for device" messages --> mitchellh/vagrant#1673
 
   $clone = <<-SHELL
-    echo 'Starting Wordpress Setup'
-    ssh -T git@github.com
-    git clone git@github.com:theinfiniteagency/bowtie-wordpress /www-temp
-    mv /www-temp/* /www/
-    rm -Rf /www-temp
-    echo "Updating Wordpress Site URL to $1.dev"
-    sed -i "s/infinitedev/$1/g" /www/bowtie-wordpress.sql
+    sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
     echo 'Importing Bowtie Database'
-    mysql -uroot -pvagrant -e "drop database wordpress"
-    mysql -uroot -pvagrant -e "create database wordpress"
-    mysql wordpress -uroot -pvagrant < /www/bowtie-wordpress.sql
+    mysql --login-path=local -e "drop database wordpress"
+    mysql --login-path=local -e "create database wordpress"
+    mysql --login-path=local wordpress < /www/bowtie-wordpress.sql
     rm /www/bowtie-wordpress.sql
+    echo "Now serving Wordpress on $1.dev"
   SHELL
 
   config.vm.provision "shell", args: "#{config.vm.hostname}", inline: $clone
