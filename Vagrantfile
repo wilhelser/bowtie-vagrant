@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = 'bento/ubuntu-16.04'
+  config.vm.box = 'theinfiniteagency/bowtie'
 
   # The hostname for the VM
   config.vm.hostname = 'bowtie-vagrant'
@@ -78,7 +78,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   $clone = <<-SHELL
     sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
     echo 'Importing Bowtie Database'
-    mysql --login-path=local -e "drop database wordpress"
     mysql --login-path=local -e "create database wordpress"
     mysql --login-path=local wordpress < /www/bowtie-wordpress.sql
     rm /www/bowtie-wordpress.sql
