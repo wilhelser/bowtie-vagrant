@@ -37,16 +37,14 @@ puts ' '
 
 @dir_name = File.basename(Dir.getwd)
 
-def say_hello
-    puts "What do you want to name this site? (#{@dir_name}) ".green << 'Press return to use current name.'
-    puts
-    site_name = gets.chomp
-end
+puts "What do you want to name this site? (#{@dir_name})".green << " Press return to use current name."
+site_name = gets.chomp
 
-if say_hello == ''
+
+if site_name == ''
   @project_name = @dir_name
 else
-  @project_name = say_hello
+  @project_name = site_name
 end
 
 puts '✨  Generating new project: '.green << @project_name
@@ -55,8 +53,10 @@ puts 'Connecting to Github'.green
   system("ssh -T git@github.com")
 puts 'Pulling latest master of bowtie-wordpress on Github'.green
   system("rm -Rf www; git clone git@github.com:theinfiniteagency/bowtie-wordpress www")
+puts 'Pulling latest master of bowtie on Github'.green
+  system("git clone git@github.com:theinfiniteagency/bowtie www/wp-content/themes/bowtie")
 puts "Updating Wordpress & Vagrant URL to #{@project_name}.dev".green
-  system("sed -i '' 's/infinitedev/#{@project_name}/g' www/bowtie-wordpress.sql")
+  system("sed -i '' 's/bowtie-vagrant/#{@project_name}/g' www/bowtie-wordpress.sql")
   system(%q!sed -i '' "/config.vm.hostname = /s/'\([^']*\)'/'! << @project_name << %q!'/" Vagrantfile!)
   system("sed -i '' 's/bowtie-vagrant/#{@project_name}/g' Vagrantfile")
 puts "Database will be imported after the box has booted".magenta
