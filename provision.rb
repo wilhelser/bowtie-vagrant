@@ -59,6 +59,7 @@ puts "Updating Wordpress & Vagrant URL to #{@project_name}.dev".green
   system("sed -i '' 's/bowtie-vagrant/#{@project_name}/g' www/bowtie-wordpress.sql")
   system(%q!sed -i '' "/config.vm.hostname = /s/'\([^']*\)'/'! << @project_name << %q!'/" Vagrantfile!)
   system("sed -i '' 's/bowtie-vagrant/#{@project_name}/g' Vagrantfile")
+  system("sed -i '' 's/bowtie-vagrant/#{@project_name}/g' www/wp-content/themes/bowtie/gulpfile.js")
 puts "Database will be imported after the box has booted".magenta
 puts "Starting Box".green
   system("vagrant up --provision");
