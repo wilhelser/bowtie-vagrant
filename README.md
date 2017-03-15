@@ -19,9 +19,9 @@ Make sure the SSH key for your host system is saved in GitHub to use the provisi
 
 ## Quick Start
 
-*Using Bowtie CLI:* Run `$ bowtie new project_name` to create and provision.
+**Using Bowtie CLI:** Run `$ bowtie new project_name` to create and provision.
 
-*Using Provision Script:* Clone the repo and run `$ ./provision.rb` for first boot and provisioning, or to destroy the current site and create a new one.
+**Using Provision Script:** Clone the repo and run `$ ./provision.rb` for first boot and provisioning, or to destroy the current site and create a new one.
 
 Access the site at `bowtie-vagrant.dev` or phpmyadmin at `bowtie-vagrant.dev:8080` (use your project name if you changed it during provision)
 
@@ -36,12 +36,12 @@ WordPress   | coders    | B********
 
 To save space (each box is about 500mb), you can destroy the VM while keeping a copy of the site and db, ready for next boot.
 
-*Using Bowtie CLI*
+**Using Bowtie CLI**
 
 1. Run `$ bowtie backup -d` to dump the db to www and destroy the machine (remove the -d flag to only create a backup)
 3. Use `$ bowtie up` to restore the site.
 
-*Manually*
+**Manually**
 
 1. First, login to phpmyadmin and dump the `wordpress` db to `bowtie-wordpress.sql` in the `www` folder.
 2. Run `$ vagrant destroy` to delete the VM
@@ -53,6 +53,7 @@ To save space (each box is about 500mb), you can destroy the VM while keeping a 
 
 ```
 $ vagrant ssh
+# Make your updates inside the box then:
 $ sudo apt-get clean
 $ sudo dd if=/dev/zero of=/EMPTY bs=1M
 $ sudo rm -f /EMPTY
