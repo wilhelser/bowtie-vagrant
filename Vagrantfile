@@ -65,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--memory', '1024']
   end
 
-  config.vm.synced_folder 'www', '/www', id: 'vagrant-root',
+  config.vm.synced_folder 'www', '/var/www', id: 'vagrant-root',
     owner: 'vagrant',
     group: 'www-data',
     mount_options: ["dmode=774,fmode=775"]
