@@ -80,8 +80,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     echo 'Importing Bowtie DB'
     mysql --login-path=local -e "DROP DATABASE IF EXISTS wordpress"
     mysql --login-path=local -e "CREATE DATABASE wordpress"
-    mysql --login-path=local wordpress < /www/bowtie-wordpress.sql
-    rm -f /www/bowtie-wordpress.sql
+    mysql --login-path=local wordpress < /var/www/bowtie-wordpress.sql
+    rm -f /var/www/bowtie-wordpress.sql
     echo "🎉  Now serving Wordpress on $1.dev"
     echo "🗄  Go to :8080 to manage the DB"
   SHELL
