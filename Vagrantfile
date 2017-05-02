@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'theinfiniteagency/bowtie'
 
   # The hostname for the VM
-  config.vm.hostname = 'motiiv'
+  config.vm.hostname = 'bowtie-vagrant'
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
