@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create an entry in the /etc/hosts file for #{hostname}.dev
   if defined? VagrantPlugins::HostsUpdater
-    config.hostsupdater.aliases = ["#{config.vm.hostname}.dev"]
+    config.hostsupdater.aliases = ["#{config.vm.hostname}.localhost"]
   end
 
   # Share an additional folder to the guest VM. The first argument is
@@ -75,16 +75,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Fixes "stdin: is not a tty" and "mesg: ttyname failed : Inappropriate ioctl for device" messages --> mitchellh/vagrant#1673
 
-  $clone = <<-SHELL
-    sed -i 's/^mesg n$/tty -s \&\& mesg n/g' /root/.profile
-    echo 'Importing Bowtie DB'
-    mysql --login-path=local -e "DROP DATABASE IF EXISTS wordpress"
-    mysql --login-path=local -e "CREATE DATABASE wordpress"
-    mysql --login-path=local wordpress < /var/www/bowtie-wordpress.sql
-    rm -f /var/www/bowtie-wordpress.sql
-    echo "🎉  Now serving Wordpress on $1.dev"
-    echo "🗄  Go to :8080 to manage the DB"
-  SHELL
+  config.vm.provision "shell", args: "#{config.vm.hostname}", path: 'provision.sh'
 
-  config.vm.provision "shell", args: "#{config.vm.hostname}", inline: $clone
 end
