@@ -21,13 +21,29 @@ Make sure the SSH key for your host system is saved in GitHub to use the provisi
 
 ## Quick Start
 
-**Barebones**: Run `vagrant up` for a barebones box that does not include our wordpress distribution. 
-
-**Using Provision Script:** Clone the repo and run `$ ./quick-start.sh` for first boot and provisioning, or to overwrite the current site. If you are using the Bowtie CLI, the box will be booted provisioned automatically.
+Follow the instructions below depending on your environment
 
 Access the site at `project-name.localhost` or phpmyadmin at `project-name.dev:8080`
 
 HTTPS for Wordpress is available beginning with the v1.2 vagrant box.
+
+### Barebones
+
+Clone this repo and run `$ vagrant up` for a barebones box that does not include our Wordpress distribution.
+
+Move your static or PHP site to the `www` folder, and use phpMyAdmin to create a database. Credentials are listed below.
+
+### Using Quick Start Script (WIP)
+
+This will download our Wordpress distribution including plugins and themes.
+
+Clone this repo and run `$ ./quick-start.sh` for first boot and provisioning, or to overwrite the current site.
+
+### Using Bowtie CLI
+
+This will download our Wordpress distribution including plugins and themes.
+
+Run `$ bowtie new project-name` and this repo will be cloned, as well as the Wordpress distribution. The box will be booted and ready to use.
 
 ## Credentials
 
@@ -50,8 +66,6 @@ To save space (each box is about 500mb), you can destroy the VM while keeping a 
 1. First, login to phpmyadmin and dump the `wordpress` db to `bowtie-wordpress.sql` in the `www` folder.
 2. Run `$ vagrant destroy` to delete the VM
 3. When you are ready to use the site again, run `$ vagrant up --provision`. This will rebuild the box and import the db again.
-
-**Remember, running the provisioner will overwrite your site files and db with a new install.**
 
 ## Repackaging Box for Vagrant Cloud
 
