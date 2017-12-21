@@ -1,6 +1,8 @@
 # bowtie-vagrant
 
-A pre-configured Ubuntu LEMP box for Wordpress.
+A pre-configured Ubuntu LEMP box for Wordpress. 
+
+Use the barebones quick start instructions if you are not an Infinite employee, otherwise:
 
 Make sure the SSH key for your host system is saved in GitHub to use the provision script. It will pull the `Bowtie` & `bowtie-wordpress` repos into `www` and import the `www/bowtie-wordpress.sql` database during provision.
 
@@ -19,11 +21,13 @@ Make sure the SSH key for your host system is saved in GitHub to use the provisi
 
 ## Quick Start
 
-**Using Bowtie CLI:** Run `$ bowtie new project_name` to create and provision.
+**Barebones**: Run `vagrant up` for a barebones box that does not include our wordpress distribution. 
 
-**Using Provision Script:** Clone the repo and run `$ ./provision.rb` for first boot and provisioning, or to destroy the current site and create a new one.
+**Using Provision Script:** Clone the repo and run `$ ./quick-start.sh` for first boot and provisioning, or to overwrite the current site. If you are using the Bowtie CLI, the box will be booted provisioned automatically.
 
-Access the site at `bowtie-vagrant.dev` or phpmyadmin at `bowtie-vagrant.dev:8080` (use your project name if you changed it during provision)
+Access the site at `project-name.localhost` or phpmyadmin at `project-name.dev:8080`
+
+HTTPS for Wordpress is available beginning with the v1.2 vagrant box.
 
 ## Credentials
 
@@ -47,13 +51,15 @@ To save space (each box is about 500mb), you can destroy the VM while keeping a 
 2. Run `$ vagrant destroy` to delete the VM
 3. When you are ready to use the site again, run `$ vagrant up --provision`. This will rebuild the box and import the db again.
 
-**Remember, running the provision.rb script will overwrite your site files and db with a new install.**
+**Remember, running the provisioner will overwrite your site files and db with a new install.**
 
-## Repackaging Box for Atlas
+## Repackaging Box for Vagrant Cloud
+
+After making system updates, run the following commands to prepare the box and package.
 
 ```
 $ vagrant ssh
-# Make your updates inside the box then:
+$ mysql --login-path=local -e "DROP DATABASE IF EXISTS wordpress"
 $ sudo apt-get clean
 $ sudo dd if=/dev/zero of=/EMPTY bs=1M
 $ sudo rm -f /EMPTY
@@ -61,4 +67,4 @@ $ cat /dev/null > ~/.bash_history && history -c && exit
 $ vagrant package --output bowtie.box
 ```
 
-Login to [Hashicorp Atlas](https://atlas.hashicorp.com/) and upload a new version for the virtualbox provider.
+Login to [Vagrant Cloud](https://app.vagrantup.com/theinfiniteagency) and upload a new version for the `virtualbox` provider. You will then need to return to the version list and release it to make it public.
