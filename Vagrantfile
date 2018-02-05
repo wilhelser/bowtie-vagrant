@@ -39,9 +39,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = false
   config.ssh.insert_key = false
 
-  # Create an entry in the /etc/hosts file for #{hostname}.dev
+  # Create an entry in the /etc/hosts file for #{hostname}.test
   if defined? VagrantPlugins::HostsUpdater
-    config.hostsupdater.aliases = ["#{config.vm.hostname}.localhost"]
+    config.hostsupdater.aliases = ["#{config.vm.hostname}.test"]
   end
 
   # Share an additional folder to the guest VM. The first argument is
