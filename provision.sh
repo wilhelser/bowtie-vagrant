@@ -14,4 +14,4 @@ sudo systemctl restart nginx
 echo "🎉  Now serving Wordpress on $1.test"
 echo "🔒  HTTPS is available"
 echo "🗄  Go to $1.test:8080 to manage the DB"
-exit
+exit 0
