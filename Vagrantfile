@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+Vagrant::DEFAULT_SERVER_URL.replace('https://vagrantcloud.com')
+
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
@@ -75,6 +77,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Fixes "stdin: is not a tty" and "mesg: ttyname failed : Inappropriate ioctl for device" messages --> mitchellh/vagrant#1673
 
-  config.vm.provision "shell", args: "#{config.vm.hostname}", path: 'provision.sh'
+  #config.vm.provision "shell", args: "#{config.vm.hostname}", path: 'provision.sh'
 
 end
